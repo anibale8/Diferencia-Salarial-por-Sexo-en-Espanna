@@ -1,0 +1,186 @@
+<!--
+    ###############################################
+    Anibal Hernando Novo
+    Diseño y Evaluación de Sistemas Interactivos
+    Universidad de Valladolid
+    Curso 2024/2025
+    ###############################################
+-->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Diferencia Salarial por Sexo en España</title>
+    <script src= "https://d3js.org/d3.v7.min.js" ></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/main.css">
+    <script src="./js/main.js"></script>
+    <script src="./js/linechart.js"></script>
+    <script src="./js/mapa.js"></script>
+    <script src="./js/barchart.js"></script>
+    <script src="https://d3js.org/topojson.v3.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@2"></script>
+    <script src="./js/d3-composite-projections.js"></script> 
+
+    <!-- Para el slider con doble handler-->
+    <link rel="stylesheet" href="./css/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+</head>
+
+<body>
+    <h1>Diferencia Salarial por Sexo en España</h1>
+    <div id="tabs">
+        <ul>
+            <li><a id="tab1">Mapa Interactivo</a></li>
+            <li><a id="tab2">Evolución Salarial por Comunidad</a></li>
+            <li><a id="tab3">Comparativa CyL vs España</a></li>
+        </ul>
+    </div>
+    
+    
+    <!-- Tab 1 Choropleth map -->
+    <div class="container" id="tab1C">
+        <h2 id="titulo4">  Distribución por Comunidades</h2>
+        <!-- Selector de terminos -->
+        <div id="selecTerminos">
+            <h5 id="sexoMapa"> Seleccione el sexo:</h5>
+            <select id="radiosTerminos2">  
+                <option value="1" selected="selected">Mujeres</option>
+                <option value="2">Hombres</option> 
+                <option value="3">Ambos</option>           
+                
+            </select>
+        </div>
+        
+        <div id="grupo4">  
+            <div id="mapa">  
+                <svg width="320" height="200"></svg>
+            </div>
+            <div id="Slider2">
+                <span id="actYear2">2008</span>
+                <div>
+                    2008 <input type="range" id="year2" max="2022" min="2008" value="2008"> 2022
+                </div>  
+                <script type="text/javascript" src="./js/slider2.js"></script>
+                <br><br>
+            </div>   
+        </div> 
+         
+        <p> El mapa muestra los datos del salario medio en las diferentes CCAA de España.
+            <br>
+            Utilice el menú desplegable y el deslizador para modificar los parámetros de los datos mostrados.
+        </p>
+    </div>
+    
+    <!-- Tab 2 Line chart + Bar chart -->
+    <div class="container" id="tab2C">
+        <div id="titulo2">
+        <h2>Evolución Salarial por Sexo</h2>
+        </div>
+        <div id="selectores">
+            <table>
+                <tr>
+                    <td>
+                        <h4 id="seleccionaComunidad">Seleccione la comunidad:</h4>
+                        <ul id="radiosComunidad" type="none">
+                        <select name="comunidad" id="selectComunidad">
+                            <option value="0" selected>Andalucia</option>
+                            <option value="1">Aragón</option>
+                            <option value="2">Asturias</option>
+                            <option value="3">Islas Baleares</option>
+                            <option value="4">Canarias</option>
+                            <option value="5">Cantabria</option>
+                            <option value="6">Castilla La Mancha</option>
+                            <option value="7">Castilla y León</option>
+                            <option value="8">Cataluña</option>
+                            <option value="9">Comunidad Valenciana</option>
+                            <option value="10">Extremadura</option>
+                            <option value="11">Galicia</option>
+                            <option value="12">Madrid</option>
+                            <option value="13">Murcia</option>
+                            <option value="14">Navarra</option>
+                            <option value="15">Pais Vasco</option>
+                            <option value="16">La Rioja</option>
+                        </select>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <h4 id="seleccionaSexo">Seleccione el sexo:</h4>
+                        <ul id="column1" class="column" type="none">
+                            <li style="color:rgb(0, 0, 0);">
+                                <input id="mujeres" name="female" type="checkbox" checked />
+                                Mujeres
+                                <span class="color-square" style="background-color: green;  width: 12px; height: 12px;"></span>
+                            </li>
+                            <li style="color:rgb(0, 0, 0);">
+                                <input id="hombres" name="male" type="checkbox" checked />
+                                Hombres
+                                <span class="color-square" style="background-color: blue;  width: 12px; height: 12px;"></span>
+                            </li>
+                            <li style="color:rgb(0, 0, 0);">
+                                <input id="ambos" name="both" type="checkbox" checked />
+                                Ambos
+                                <span class="color-square" style="background-color: orange;  width: 12px; height: 12px;"></span>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            
+        </div>
+        <div id="grupo1">
+            <div id="serie"></div>
+            <div id="grupo1-fechas">
+                <label id="rangoFechas"> 2014 - 2022</label>
+                <div id="container-slider">
+                    <div id="slider-range" ></div>
+                </div>
+                <button id="refresh-button">Restablecer parámetros</button>
+            </div>
+        
+        </div>
+
+        <p> El gráfico de lineas muestra la evolución de la tasa de empleo en España.
+            <br>
+            Utilice el menú desplegable y el deslizador para modificar los parámetros de los datos mostrados.
+        </p>
+        </div>
+
+        <div class="container" id="tab3C">      
+            <h2>Comparación salarial: Castilla y León vs España</h2>
+            <ul class="checkbox-group">
+                <li style="color:rgb(0, 0, 0);">
+                    <input id="ambos" name="sexos-barchart" type="radio" value="both" onchange="cambioRadioSexo(this)" checked/>
+                    Ambos
+                </li>
+                <li style="color:rgb(0, 0, 0);">
+                    <input id="mujeres" name="sexos-barchart" type="radio" value="female" onchange="cambioRadioSexo(this)"/>
+                    Mujeres
+                </li>
+                <li style="color:rgb(0, 0, 0);">
+                    <input id="hombres" name="sexos-barchart" type="radio" value="male" onchange="cambioRadioSexo(this)"/>
+                    Hombres
+                </li>
+            </ul>
+            <div id="barras"></div>
+        </div>
+        
+        
+
+    <div id="piepagina">
+        <footer id="footer">
+            <p>&copy; <a href="mailto:anibal.hernando@estudiantes.uva.es">Anibal Hernando Novo</a> 2024-2025 · Diseño y Evaluación
+                de Sistemas Interactivos · INdat · UVa</p>
+        </footer>
+    </div>
+    
+</body>
+
+</html>
