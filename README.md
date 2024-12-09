@@ -18,7 +18,7 @@ Este dataset contiene estadísticas sobre la distribución del ingreso bruto anu
 
 ## Visualización
 
-La visualización consiste en 3 diferentes visualizaciones:
+La visualización consiste en 3 gráficos diferentes:
 
 #### Mapa Interactivo
 
